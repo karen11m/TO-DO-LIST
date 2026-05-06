@@ -1,0 +1,18 @@
+<resources>
+    <style name="Theme.TODOLIST" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#667EEA</item>
+        <item name="colorPrimaryVariant">#764BA2</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">#667EEA</item>
+        <item name="colorSecondaryVariant">#764BA2</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="android:windowBackground">@drawable/bg_gradient</item>
+        <item name="android:statusBarColor">#667EEA</item>
+    </style>
+
+    <style name="TitleTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+</resources>
