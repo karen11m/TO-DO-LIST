@@ -9,7 +9,7 @@ Aplicación móvil Android para gestionar tareas personales. Permite crear, edit
 
 | Pantalla Principal         | Agregar Tarea |
 |----------------------------|---------------|
-| ![Principal](screenshots/![{0BA722E6-7499-4297-AD5E-AEBF6EDEFD05}.png](screenshots/%7B0BA722E6-7499-4297-AD5E-AEBF6EDEFD05%7D.png)) | ![Agregar](screenshots/![{7768C228-59FA-418B-BE82-184800B57720}.png](screenshots/%7B7768C228-59FA-418B-BE82-184800B57720%7D.png) |
+|[{0BA722E6-7499-4297-AD5E-AEBF6EDEFD05}.png](screenshots/%7B0BA722E6-7499-4297-AD5E-AEBF6EDEFD05%7D.png)) |[{7768C228-59FA-418B-BE82-184800B57720}.png](screenshots/%7B7768C228-59FA-418B-BE82-184800B57720%7D.png) |
 
 ## 🛠️ Tecnologías
 - Java
