@@ -42,11 +42,11 @@ Aplicación desarrollada en **Android (Java)** que permite a los usuarios gestio
 
 | Pantalla Principal | Agregar Tarea | Calendario |
 |--------------------|---------------|------------|
-|(![WhatsApp Image 2026-06-17 at 1.23.50 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.23.50%20PM.jpeg)) | ![Add](![WhatsApp Image 2026-06-17 at 1.26.51 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.51%20PM.jpeg)) | ![Calendar](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) |
+|(![WhatsApp Image 2026-06-17 at 1.23.50 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.23.50%20PM.jpeg)) | ![Add](![WhatsApp Image 2026-06-17 at 1.26.51 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.51%20PM.jpeg)) | ![Calendar](![{3C4A7941-9072-4799-AB52-048F67083AAF}.png](screenshots/%7B3C4A7941-9072-4799-AB52-048F67083AAF%7D.png)WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg))|
 
 | Estadísticas | Configuración | Firebase Console |
-|--------------|---------------|------------------|
-| ![Stats](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Settings](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Firebase](![img.png](img.png)![{C49CCEE3-FD30-4272-9ABA-066C63F70E59}.png](screenshots/%7BC49CCEE3-FD30-4272-9ABA-066C63F70E59%7D.png)) |
+|--------------|---------------|-----------------|
+| ![Stats](![{8DFD18E0-9EFB-4C28-99F1-296CFC46D997}.png](screenshots/%7B8DFD18E0-9EFB-4C28-99F1-296CFC46D997%7D.png)![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Settings](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Firebase](![{C49CCEE3-FD30-4272-9ABA-066C63F70E59}.png](screenshots/%7BC49CCEE3-FD30-4272-9ABA-066C63F70E59%7D.png))) |
 
 ---
 
