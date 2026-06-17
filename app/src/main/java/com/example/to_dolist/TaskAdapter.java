@@ -8,75 +8,122 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
-    private List<Task> lista;
-    private DBHelper db;
+    private List<Task> taskList;
     private Context context;
-    private MainActivity mainActivity;  // ← NUEVO
+    private FirebaseHelper firebaseHelper;
 
-    public TaskAdapter(List<Task> lista, DBHelper db, Context context) {
-        this.lista = lista;
-        this.db = db;
+    public TaskAdapter(List<Task> taskList, Context context) {
+        this.taskList = taskList;
         this.context = context;
-        // Guardar referencia a MainActivity
-        if (context instanceof MainActivity) {
-            this.mainActivity = (MainActivity) context;
-        }
+        this.firebaseHelper = new FirebaseHelper();
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Task t = lista.get(position);
-        holder.titulo.setText(t.getTitulo());
-        holder.descripcion.setText(t.getDescripcion());
-        holder.check.setChecked(t.getEstado() == 1);
-        holder.tvFecha.setText(t.getFecha());
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Task task = taskList.get(position);
 
-        // ← CORREGIDO: actualizar contador al marcar/desmarcar
-        holder.check.setOnClickListener(v -> {
-            int nuevoEstado = holder.check.isChecked() ? 1 : 0;
-            db.actualizarEstado(t.getId(), nuevoEstado);
-            t.setEstado(nuevoEstado);
+        holder.titulo.setText(task.getTitulo());
+        holder.descripcion.setText(task.getDescripcion());
+        holder.check.setChecked(task.isCompletado());
 
-            // Actualizar el contador en MainActivity
-            if (mainActivity != null) {
-                mainActivity.actualizarContador();  // ← Llama a este método
+        // Mostrar prioridad
+        String prioridad = task.getPrioridad();
+        if (prioridad != null && !prioridad.isEmpty() && !prioridad.equals("Seleccionar prioridad")) {
+            holder.tvPrioridad.setText(prioridad);
+            holder.tvPrioridad.setVisibility(View.VISIBLE);
+            // Cambiar color según prioridad
+            if (prioridad.equals("Alta")) {
+                holder.tvPrioridad.setBackgroundResource(R.drawable.bg_priority_high);
+            } else if (prioridad.equals("Media")) {
+                holder.tvPrioridad.setBackgroundResource(R.drawable.bg_priority_medium);
+            } else if (prioridad.equals("Baja")) {
+                holder.tvPrioridad.setBackgroundResource(R.drawable.bg_priority_low);
             }
+        } else {
+            holder.tvPrioridad.setVisibility(View.GONE);
+        }
+
+        // Mostrar categoría
+        String categoria = task.getCategoria();
+        if (categoria != null && !categoria.isEmpty() && !categoria.equals("Seleccionar categoría")) {
+            holder.tvCategoria.setText(categoria);
+            holder.tvCategoria.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvCategoria.setVisibility(View.GONE);
+        }
+
+        // Fecha
+        if (task.getFecha() != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+            holder.tvFecha.setText(sdf.format(task.getFecha()));
+        }
+
+        // Checkbox
+        holder.check.setOnClickListener(v -> {
+            task.setCompletado(holder.check.isChecked());
+
+            firebaseHelper.actualizarTarea(task, new FirebaseHelper.OnTaskUpdatedListener() {
+                @Override
+                public void onSuccess() {
+                    // El SnapshotListener refrescará automáticamente
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(context, "Error: " + error, Toast.LENGTH_SHORT).show();
+                    holder.check.setChecked(!task.isCompletado());
+                }
+            });
         });
 
+        // Editar
         holder.btnEditar.setOnClickListener(v -> {
-            Intent i = new Intent(context, AddEditTaskActivity.class);
-            i.putExtra("id", t.getId());
-            i.putExtra("titulo", t.getTitulo());
-            i.putExtra("descripcion", t.getDescripcion());
-            context.startActivity(i);
+            Intent intent = new Intent(context, AddEditTaskActivity.class);
+            intent.putExtra("id", task.getId());
+            intent.putExtra("titulo", task.getTitulo());
+            intent.putExtra("descripcion", task.getDescripcion());
+            intent.putExtra("completado", task.isCompletado());
+            intent.putExtra("prioridad", task.getPrioridad());
+            intent.putExtra("categoria", task.getCategoria());
+            context.startActivity(intent);
         });
 
+        // Eliminar
         holder.btnEliminar.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Eliminar Tarea")
                     .setMessage("¿Eliminar esta tarea?")
                     .setPositiveButton("Eliminar", (dialog, which) -> {
-                        db.eliminar(t.getId());
-                        lista.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, lista.size());
+                        firebaseHelper.eliminarTarea(task.getId(), new FirebaseHelper.OnTaskDeletedListener() {
+                            @Override
+                            public void onSuccess() {
+                                Toast.makeText(context, "✓ Tarea eliminada", Toast.LENGTH_SHORT).show();
+                            }
 
-                        // Actualizar todo al eliminar
-                        if (mainActivity != null) {
-                            mainActivity.cargarTareas();
-                        }
+                            @Override
+                            public void onError(String error) {
+                                Toast.makeText(context, "❌ Error: " + error, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
@@ -85,22 +132,24 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return taskList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView titulo, descripcion, tvFecha;
+        TextView titulo, descripcion, tvFecha, tvPrioridad, tvCategoria;
         CheckBox check;
         ImageButton btnEditar, btnEliminar;
 
-        public ViewHolder(View view) {
-            super(view);
-            titulo = view.findViewById(R.id.titulo);
-            descripcion = view.findViewById(R.id.descripcion);
-            check = view.findViewById(R.id.check);
-            btnEditar = view.findViewById(R.id.btn_editar);
-            btnEliminar = view.findViewById(R.id.btn_eliminar);
-            tvFecha = view.findViewById(R.id.tvFecha);
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titulo = itemView.findViewById(R.id.titulo);
+            descripcion = itemView.findViewById(R.id.descripcion);
+            tvFecha = itemView.findViewById(R.id.tvFecha);
+            tvPrioridad = itemView.findViewById(R.id.tvPrioridad);
+            tvCategoria = itemView.findViewById(R.id.tvCategoria);
+            check = itemView.findViewById(R.id.check);
+            btnEditar = itemView.findViewById(R.id.btn_editar);
+            btnEliminar = itemView.findViewById(R.id.btn_eliminar);
         }
     }
 }

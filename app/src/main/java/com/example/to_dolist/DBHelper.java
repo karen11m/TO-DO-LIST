@@ -1,5 +1,6 @@
 package com.example.to_dolist;
 
+/*
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -150,3 +151,4 @@ public class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 }
+*/

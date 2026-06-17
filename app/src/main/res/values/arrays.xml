@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="prioridades">
+        <item>Alta</item>
+        <item>Media</item>
+        <item>Baja</item>
+    </string-array>
+
+    <string-array name="categorias">
+        <item>Trabajo</item>
+        <item>Personal</item>
+        <item>Estudio</item>
+        <item>Salud</item>
+        <item>Hogar</item>
+    </string-array>
+</resources>

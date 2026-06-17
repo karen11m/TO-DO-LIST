@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.example.to_dolist" />
+                  <option name="mobileSdkAppId" value="1:634442242686:android:6cf0a47b0b53b72679162f" />
+                  <option name="projectId" value="todolist-firebase-8dc0b" />
+                  <option name="projectNumber" value="634442242686" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

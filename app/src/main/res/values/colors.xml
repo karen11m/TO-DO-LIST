@@ -1,22 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <!-- Colores base -->
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
 
-    <!-- Colores bonitos agregados -->
-    <color name="bg_gradient_start">#667EEA</color>
-    <color name="bg_gradient_end">#764BA2</color>
-    <color name="card_bg">#FFFFFF</color>
-    <color name="text_title">#1A1A2E</color>
-    <color name="text_desc">#4A4A4A</color>
-    <color name="priority_high">#F44336</color>
-    <color name="priority_medium">#FF9800</color>
-    <color name="priority_low">#4CAF50</color>
-    <color name="fab_bg">#667EEA</color>
-    <color name="button_bg">#667EEA</color>
+    <!-- Paleta Principal (Azul Marino Profundo) -->
+    <color name="navy_900">#0A192F</color>
+    <color name="navy_800">#112240</color>
+    <color name="navy_700">#1A2D50</color>
+    <color name="navy_600">#233A6B</color>
+    <color name="navy_500">#2C4A8A</color>
+
+    <!-- Grises Suaves -->
+    <color name="gray_100">#F5F7FA</color>
+    <color name="gray_200">#E8ECF1</color>
+    <color name="gray_300">#D1D9E6</color>
+    <color name="gray_400">#A8B5C6</color>
+    <color name="gray_500">#7A8A9E</color>
+    <color name="gray_600">#4A5A6E</color>
+
+    <!-- Colores de Acento -->
+    <color name="mint_400">#4DD0A1</color>
+    <color name="mint_500">#26A69A</color>
+    <color name="mint_600">#00897B</color>
+
+    <color name="coral_400">#FF7A6B</color>
+    <color name="coral_500">#FF5252</color>
+
+    <!-- Prioridades -->
+    <color name="priority_high">#FF5252</color>
+    <color name="priority_medium">#FFB74D</color>
+    <color name="priority_low">#4DD0A1</color>
+
+    <!-- Categorías -->
+    <color name="category_work">#5C6BC0</color>
+    <color name="category_personal">#26A69A</color>
+    <color name="category_study">#FF7043</color>
+    <color name="category_health">#66BB6A</color>
+    <color name="category_home">#FFA726</color>
 </resources>

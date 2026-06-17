@@ -1,32 +1,46 @@
 package com.example.to_dolist;
 
+import java.util.Date;
+
 public class Task {
-    private int id;
+    private String id;
     private String titulo;
     private String descripcion;
-    private int estado;
-    private String fecha;  // ← NUEVO
+    private boolean completado;
+    private Date fecha;
+    private String prioridad;   // ← NUEVO
+    private String categoria;   // ← NUEVO
 
-    // Constructor con fecha
-    public Task(int id, String titulo, String descripcion, int estado, String fecha) {
-        this.id = id;
+    public Task() {}
+
+    public Task(String titulo, String descripcion, boolean completado, Date fecha, String prioridad, String categoria) {
         this.titulo = titulo;
         this.descripcion = descripcion;
-        this.estado = estado;
+        this.completado = completado;
         this.fecha = fecha;
+        this.prioridad = prioridad;
+        this.categoria = categoria;
     }
 
-    // Constructor sin fecha
-    public Task(int id, String titulo, String descripcion, int estado) {
-        this(id, titulo, descripcion, estado, "");
-    }
+    // Getters y Setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public int getId() { return id; }
     public String getTitulo() { return titulo; }
-    public String getDescripcion() { return descripcion; }
-    public int getEstado() { return estado; }
-    public String getFecha() { return fecha; }
+    public void setTitulo(String titulo) { this.titulo = titulo; }
 
-    public void setEstado(int estado) { this.estado = estado; }
-    public void setFecha(String fecha) { this.fecha = fecha; }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    public boolean isCompletado() { return completado; }
+    public void setCompletado(boolean completado) { this.completado = completado; }
+
+    public Date getFecha() { return fecha; }
+    public void setFecha(Date fecha) { this.fecha = fecha; }
+
+    public String getPrioridad() { return prioridad; }
+    public void setPrioridad(String prioridad) { this.prioridad = prioridad; }
+
+    public String getCategoria() { return categoria; }
+    public void setCategoria(String categoria) { this.categoria = categoria; }
 }
