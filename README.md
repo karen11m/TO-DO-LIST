@@ -46,7 +46,7 @@ Aplicación desarrollada en **Android (Java)** que permite a los usuarios gestio
 
 | Estadísticas | Configuración | Firebase Console |
 |--------------|---------------|------------------|
-| ![Stats](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Settings](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Firebase](![{C49CCEE3-FD30-4272-9ABA-066C63F70E59}.png](screenshots/%7BC49CCEE3-FD30-4272-9ABA-066C63F70E59%7D.png)) |
+| ![Stats](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Settings](![WhatsApp Image 2026-06-17 at 1.26.52 PM.jpeg](screenshots/WhatsApp%20Image%202026-06-17%20at%201.26.52%20PM.jpeg)) | ![Firebase](![img.png](img.png)![{C49CCEE3-FD30-4272-9ABA-066C63F70E59}.png](screenshots/%7BC49CCEE3-FD30-4272-9ABA-066C63F70E59%7D.png)) |
 
 ---
 
