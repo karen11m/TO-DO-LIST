@@ -59,22 +59,6 @@ Aplicación desarrollada en **Android (Java)** que permite a los usuarios regist
 
 ---
 
-## 📸 **Capturas de Pantalla**
-
-| Login | Registro | Panel de Administración |
-|-------|----------|--------------------------|
-| ![Login](screenshots/login.jpeg) | ![Register](screenshots/register.jpeg) | ![Admin](screenshots/admin_panel.jpeg) |
-
-| Pantalla Principal | Agregar Tarea | Calendario |
-|--------------------|---------------|------------|
-| ![Main](screenshots/main_screen.jpeg) | ![Add](screenshots/add_task.jpeg) | ![Calendar](screenshots/calendar.png) |
-
-| Estadísticas | Configuración | Firebase Console |
-|--------------|---------------|-------------------|
-| ![Stats](screenshots/stats.png) | ![Settings](screenshots/settings.jpeg) | ![Firebase](screenshots/firebase_console.png) |
-
----
-
 ## 🛠️ **Requisitos Técnicos Cumplidos (Momento 3)**
 
 ### ✅ **1. Módulo de Seguridad y Sesiones**
