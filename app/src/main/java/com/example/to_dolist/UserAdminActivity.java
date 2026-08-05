@@ -3,6 +3,7 @@ package com.example.to_dolist;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -25,6 +26,7 @@ public class UserAdminActivity extends AppCompatActivity {
     private ListenerRegistration listenerRegistration;
     private FirebaseFirestore firestore;
     private android.widget.LinearLayout layoutSinUsuarios;
+    private ImageButton btnAtras;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +37,13 @@ public class UserAdminActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recyclerViewUsuarios);
         layoutSinUsuarios = findViewById(R.id.layoutSinUsuarios);
+        btnAtras = findViewById(R.id.btnAtras);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new UsuarioAdapter(usuarios, this);
         recyclerView.setAdapter(adapter);
+
+        btnAtras.setOnClickListener(v -> finish());
 
         cargarUsuarios();
     }

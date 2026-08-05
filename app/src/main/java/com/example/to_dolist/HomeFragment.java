@@ -30,7 +30,7 @@ public class HomeFragment extends Fragment {
     private LinearLayout layoutVacio;
     private TextView tvProgresoTexto, tvContadorTareas, tvCompletadas;
     private ProgressBar progressBarTareas;
-    private ImageButton btnAdminPanel, btnLogout;
+    private ImageButton btnLogout;
 
     private FirebaseHelper firebaseHelper;
     private AuthHelper authHelper;
@@ -57,18 +57,13 @@ public class HomeFragment extends Fragment {
         tvContadorTareas = view.findViewById(R.id.tvContadorTareas);
         tvCompletadas = view.findViewById(R.id.tvCompletadas);
         progressBarTareas = view.findViewById(R.id.progressBarTareas);
-        btnAdminPanel = view.findViewById(R.id.btnAdminPanel);
         btnLogout = view.findViewById(R.id.btnLogout);
 
         boolean esAdmin = "admin".equals(authHelper.obtenerRolLocal(requireContext()));
-        btnAdminPanel.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new TaskAdapter(taskList, requireContext(), esAdmin);
         recyclerView.setAdapter(adapter);
-
-        btnAdminPanel.setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), UserAdminActivity.class)));
 
         btnLogout.setOnClickListener(v -> confirmarCerrarSesion());
 

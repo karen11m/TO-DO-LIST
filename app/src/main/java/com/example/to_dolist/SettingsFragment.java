@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -20,6 +21,7 @@ public class SettingsFragment extends Fragment {
 
     private TextView tvNombrePerfil, tvEmailPerfil, tvRolPerfil, tvInicial;
     private MaterialButton btnCerrarSesion;
+    private MaterialCardView cardPanelAdmin;
     private AuthHelper authHelper;
 
     @Nullable
@@ -40,8 +42,14 @@ public class SettingsFragment extends Fragment {
         tvRolPerfil = view.findViewById(R.id.tvRolPerfil);
         tvInicial = view.findViewById(R.id.tvInicial);
         btnCerrarSesion = view.findViewById(R.id.btnCerrarSesion);
+        cardPanelAdmin = view.findViewById(R.id.cardPanelAdmin);
 
         cargarPerfil();
+
+        boolean esAdmin = "admin".equals(authHelper.obtenerRolLocal(requireContext()));
+        cardPanelAdmin.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+        cardPanelAdmin.setOnClickListener(v ->
+                startActivity(new Intent(requireContext(), UserAdminActivity.class)));
 
         btnCerrarSesion.setOnClickListener(v -> confirmarCerrarSesion());
     }
