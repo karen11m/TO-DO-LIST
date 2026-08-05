@@ -23,10 +23,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     private List<Task> taskList;
     private Context context;
     private FirebaseHelper firebaseHelper;
+    private boolean esAdmin;
 
-    public TaskAdapter(List<Task> taskList, Context context) {
+    public TaskAdapter(List<Task> taskList, Context context, boolean esAdmin) {
         this.taskList = taskList;
         this.context = context;
+        this.esAdmin = esAdmin;
         this.firebaseHelper = new FirebaseHelper();
     }
 
@@ -45,12 +47,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         holder.descripcion.setText(task.getDescripcion());
         holder.check.setChecked(task.isCompletado());
 
-        // Mostrar prioridad
         String prioridad = task.getPrioridad();
         if (prioridad != null && !prioridad.isEmpty() && !prioridad.equals("Seleccionar prioridad")) {
             holder.tvPrioridad.setText(prioridad);
             holder.tvPrioridad.setVisibility(View.VISIBLE);
-            // Cambiar color según prioridad
             if (prioridad.equals("Alta")) {
                 holder.tvPrioridad.setBackgroundResource(R.drawable.bg_priority_high);
             } else if (prioridad.equals("Media")) {
@@ -62,7 +62,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             holder.tvPrioridad.setVisibility(View.GONE);
         }
 
-        // Mostrar categoría
         String categoria = task.getCategoria();
         if (categoria != null && !categoria.isEmpty() && !categoria.equals("Seleccionar categoría")) {
             holder.tvCategoria.setText(categoria);
@@ -71,21 +70,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             holder.tvCategoria.setVisibility(View.GONE);
         }
 
-        // Fecha
         if (task.getFecha() != null) {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
             holder.tvFecha.setText(sdf.format(task.getFecha()));
         }
 
-        // Checkbox
+        // RBAC: solo el admin puede eliminar tareas
+        holder.btnEliminar.setVisibility(esAdmin ? View.VISIBLE : View.GONE);
+
         holder.check.setOnClickListener(v -> {
             task.setCompletado(holder.check.isChecked());
-
             firebaseHelper.actualizarTarea(task, new FirebaseHelper.OnTaskUpdatedListener() {
                 @Override
-                public void onSuccess() {
-                    // El SnapshotListener refrescará automáticamente
-                }
+                public void onSuccess() { }
 
                 @Override
                 public void onError(String error) {
@@ -95,7 +92,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             });
         });
 
-        // Editar
         holder.btnEditar.setOnClickListener(v -> {
             Intent intent = new Intent(context, AddEditTaskActivity.class);
             intent.putExtra("id", task.getId());
@@ -107,7 +103,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
             context.startActivity(intent);
         });
 
-        // Eliminar
         holder.btnEliminar.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Eliminar Tarea")

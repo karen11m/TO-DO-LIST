@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">TO-DO LIST</string>
+    <string name="app_name">TO-DO-LIST</string>
+
+    <string-array name="roles_array">
+        <item>Empleado</item>
+        <item>Administrador</item>
+    </string-array>
 </resources>

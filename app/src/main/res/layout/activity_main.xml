@@ -3,132 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+    android:background="#F5F7FA">
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_height="match_parent" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="80dp">
-
-            <!-- Encabezado con barra de progreso -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="0dp"
-                app:cardElevation="0dp"
-                android:background="#0A192F">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Tu progreso"
-                            android:textSize="14sp"
-                            android:textColor="#B0BEC5" />
-
-                        <TextView
-                            android:id="@+id/tvProgresoTexto"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="0%"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:textColor="#26A69A" />
-
-                    </LinearLayout>
-
-                    <ProgressBar
-                        android:id="@+id/progressBarTareas"
-                        style="?android:attr/progressBarStyleHorizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="6dp"
-                        android:layout_marginTop="8dp"
-                        android:progress="0"
-                        android:progressTint="#26A69A"
-                        android:progressBackgroundTint="#2C4A8A" />
-
-                    <TextView
-                        android:id="@+id/tvContadorTareas"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="8dp"
-                        android:text="0 tareas pendientes"
-                        android:textSize="12sp"
-                        android:textColor="#B0BEC5"
-                        android:gravity="end" />
-
-                </LinearLayout>
-
-            </androidx.cardview.widget.CardView>
-
-            <!-- RecyclerView -->
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:paddingVertical="8dp"
-                android:clipToPadding="false"
-                android:nestedScrollingEnabled="false" />
-
-            <!-- Mensaje sin tareas -->
-            <LinearLayout
-                android:id="@+id/layoutVacio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="40dp"
-                android:visibility="gone">
-
-                <ImageView
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:src="@drawable/ic_empty"
-                    android:alpha="0.6" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:text="✨ No hay tareas"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#1A1A2E" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:text="Toca el botón + para agregar"
-                    android:textSize="14sp"
-                    android:textColor="#7A8A9E" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
@@ -140,7 +21,6 @@
         app:backgroundTint="#FFFFFF"
         app:elevation="8dp" />
 
-    <!-- FAB -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab_agregar"
         android:layout_width="64dp"

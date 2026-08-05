@@ -3,136 +3,79 @@ package com.example.to_dolist;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.ListenerRegistration;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private TaskAdapter adapter;
-    private FloatingActionButton fab;
-    private LinearLayout layoutVacio;
     private BottomNavigationView bottomNavigation;
-    private TextView tvProgresoTexto, tvContadorTareas;
-    private ProgressBar progressBarTareas;
-
-    private FirebaseHelper firebaseHelper;
-    private List<Task> taskList = new ArrayList<>();
-    private ListenerRegistration listenerRegistration;  // ← Para liberar memoria
+    private FloatingActionButton fab;
+    private AuthHelper authHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        authHelper = new AuthHelper();
+
+        if (authHelper.getCurrentUser() == null) {
+            irALogin();
+            return;
+        }
+
         setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.recyclerView);
-        fab = findViewById(R.id.fab_agregar);
-        layoutVacio = findViewById(R.id.layoutVacio);
         bottomNavigation = findViewById(R.id.bottomNavigation);
-        tvProgresoTexto = findViewById(R.id.tvProgresoTexto);
-        tvContadorTareas = findViewById(R.id.tvContadorTareas);
-        progressBarTareas = findViewById(R.id.progressBarTareas);
+        fab = findViewById(R.id.fab_agregar);
 
-        firebaseHelper = new FirebaseHelper();
+        fab.setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this, AddEditTaskActivity.class)));
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TaskAdapter(taskList, this);
-        recyclerView.setAdapter(adapter);
-
-        fab.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
-            startActivity(intent);
-        });
+        if (savedInstanceState == null) {
+            mostrarFragmento(new HomeFragment());
+        }
 
         bottomNavigation.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
             if (id == R.id.nav_home) {
+                fab.setVisibility(View.VISIBLE);
+                mostrarFragmento(new HomeFragment());
                 return true;
             } else if (id == R.id.nav_calendar) {
-                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
+                fab.setVisibility(View.GONE);
+                mostrarFragmento(new CalendarFragment());
                 return true;
             } else if (id == R.id.nav_stats) {
-                startActivity(new Intent(MainActivity.this, StatsActivity.class));
+                fab.setVisibility(View.GONE);
+                mostrarFragmento(new StatsFragment());
                 return true;
             } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                fab.setVisibility(View.GONE);
+                mostrarFragmento(new SettingsFragment());
                 return true;
             }
             return false;
         });
-
-        conectarFirestore();
     }
 
-    private void conectarFirestore() {
-        // Guardamos la referencia del listener para poder liberarla después
-        listenerRegistration = firebaseHelper.obtenerTareasEnTiempoReal(new FirebaseHelper.OnTasksLoadedListener() {
-            @Override
-            public void onTasksLoaded(List<Task> tasks) {
-                taskList.clear();
-                taskList.addAll(tasks);
-                adapter.notifyDataSetChanged();
-                actualizarUI();
-
-                if (taskList.isEmpty()) {
-                    recyclerView.setVisibility(View.GONE);
-                    layoutVacio.setVisibility(View.VISIBLE);
-                } else {
-                    recyclerView.setVisibility(View.VISIBLE);
-                    layoutVacio.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(MainActivity.this, "Error: " + error, Toast.LENGTH_LONG).show();
-            }
-        });
+    private void mostrarFragmento(Fragment fragment) {
+        getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(
+                        android.R.anim.fade_in,
+                        android.R.anim.fade_out
+                )
+                .replace(R.id.fragmentContainer, fragment)
+                .commit();
     }
 
-    private void actualizarUI() {
-        int completadas = 0;
-        int total = taskList.size();
-
-        for (Task t : taskList) {
-            if (t.isCompletado()) {
-                completadas++;
-            }
-        }
-
-        int porcentaje = total > 0 ? (completadas * 100 / total) : 0;
-        int pendientes = total - completadas;
-
-        tvProgresoTexto.setText(porcentaje + "%");
-        progressBarTareas.setProgress(porcentaje);
-        tvContadorTareas.setText(pendientes + " tareas pendientes");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    // ✅ Liberar memoria de Firebase al cerrar la app
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (listenerRegistration != null) {
-            listenerRegistration.remove();
-            listenerRegistration = null;
-        }
+    private void irALogin() {
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

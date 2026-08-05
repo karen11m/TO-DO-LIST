@@ -1,16 +1,20 @@
 package com.example.to_dolist;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.List;
 
-public class StatsActivity extends AppCompatActivity {
+public class StatsFragment extends Fragment {
 
     private TextView tvTotal, tvCompletadas, tvPendientes, tvPorcentaje;
     private TextView tvAltaCount, tvMediaCount, tvBajaCount;
@@ -19,21 +23,27 @@ public class StatsActivity extends AppCompatActivity {
     private FirebaseHelper firebaseHelper;
     private ListenerRegistration listenerRegistration;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stats);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_stats, container, false);
+    }
 
-        tvTotal = findViewById(R.id.tvTotal);
-        tvCompletadas = findViewById(R.id.tvCompletadasStat);
-        tvPendientes = findViewById(R.id.tvPendientesStat);
-        tvPorcentaje = findViewById(R.id.tvPorcentajeStat);
-        tvAltaCount = findViewById(R.id.tvAltaCount);
-        tvMediaCount = findViewById(R.id.tvMediaCount);
-        tvBajaCount = findViewById(R.id.tvBajaCount);
-        barAlta = findViewById(R.id.barAlta);
-        barMedia = findViewById(R.id.barMedia);
-        barBaja = findViewById(R.id.barBaja);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        tvTotal = view.findViewById(R.id.tvTotal);
+        tvCompletadas = view.findViewById(R.id.tvCompletadasStat);
+        tvPendientes = view.findViewById(R.id.tvPendientesStat);
+        tvPorcentaje = view.findViewById(R.id.tvPorcentajeStat);
+        tvAltaCount = view.findViewById(R.id.tvAltaCount);
+        tvMediaCount = view.findViewById(R.id.tvMediaCount);
+        tvBajaCount = view.findViewById(R.id.tvBajaCount);
+        barAlta = view.findViewById(R.id.barAlta);
+        barMedia = view.findViewById(R.id.barMedia);
+        barBaja = view.findViewById(R.id.barBaja);
 
         firebaseHelper = new FirebaseHelper();
         cargarEstadisticas();
@@ -43,7 +53,7 @@ public class StatsActivity extends AppCompatActivity {
         listenerRegistration = firebaseHelper.obtenerTareasEnTiempoReal(new FirebaseHelper.OnTasksLoadedListener() {
             @Override
             public void onTasksLoaded(List<Task> tasks) {
-                actualizarEstadisticas(tasks);
+                if (isAdded()) actualizarEstadisticas(tasks);
             }
 
             @Override
@@ -83,6 +93,7 @@ public class StatsActivity extends AppCompatActivity {
     private void actualizarBarra(View barra, int cantidad, int total) {
         float porcentaje = total > 0 ? (cantidad / (float) total) : 0f;
         barra.post(() -> {
+            if (!isAdded()) return;
             View parent = (View) barra.getParent();
             int anchoDisponible = parent.getWidth();
             barra.getLayoutParams().width = (int) (anchoDisponible * porcentaje);
@@ -91,8 +102,8 @@ public class StatsActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         if (listenerRegistration != null) {
             listenerRegistration.remove();
         }
