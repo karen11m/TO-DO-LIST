@@ -6,7 +6,7 @@
 
 ## 👤 Autor
 
-**[Karen Tatiana Mendez]**
+**Karen Tatiana Mendez**
 Programación de Aplicaciones Móviles II — Tercer Seguimiento (Sustentación Final)
 
 ---
